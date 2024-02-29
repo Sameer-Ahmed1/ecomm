@@ -1,14 +1,18 @@
-import {   Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { ProductProvider } from "./contexts/ProductContext";
+import { CartProvider } from "./contexts/CartContext";
+import CartSideBar from "./components/CartSideBar";
 function App() {
   return (
-    <>
-      <div >
-       <div>this is navbar</div>
-        <div >
-           <Outlet />
+    <ProductProvider>
+      <CartProvider>
+        <div>this is navbar</div>
+        <div>
+          <Outlet />
         </div>
-      </div>
-    </>
+        <CartSideBar />
+      </CartProvider>
+    </ProductProvider>
   );
 }
 

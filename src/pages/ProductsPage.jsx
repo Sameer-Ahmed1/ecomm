@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import productService from "../services/product";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../contexts/CartContext";
 const ProductsPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-
+  const { addToCart, removeFromCart } = useContext(CartContext);
   const getProduct = async (id) => {
     try {
       const productData = await productService.fetchProduct(+id);
@@ -37,7 +38,10 @@ const ProductsPage = () => {
         <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
         <p className="mb-2">{product.description}</p>
         <p className="text-xl font-bold mb-4">${product.price}</p>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+        <button
+          onClick={() => addToCart(product)}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+        >
           Add to Cart
         </button>
         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">

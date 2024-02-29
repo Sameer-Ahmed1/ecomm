@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { CartContext } from "../contexts/CartContext";
 
 const CartSideBar = () => {
@@ -8,6 +8,20 @@ const CartSideBar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  const sidebarRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!cart) {
     return <div>loading...</div>;
@@ -22,6 +36,7 @@ const CartSideBar = () => {
         Cart
       </button>
       <div
+        ref={sidebarRef}
         className={`transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } fixed right-0 top-0 h-full w-64 p-4 bg-white border-l shadow-lg transition-transform duration-200 ease-in-out`}

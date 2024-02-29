@@ -1,23 +1,26 @@
 import { useParams } from "react-router-dom";
 import productService from "../services/product";
-import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../contexts/CartContext";
+import React, { useEffect, useState } from "react";
+import { useCart } from "../hooks/useCart";
+import { Product } from "../types";
+
 const ProductsPage = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const { addToCart, removeFromCart } = useContext(CartContext);
-  const getProduct = async (id) => {
+  const [product, setProduct] = useState<Product | null>(null);
+  const { addToCart, removeFromCart } = useCart();
+  const getProduct = async (id: number) => {
     try {
       const productData = await productService.fetchProduct(+id);
       setProduct(productData);
-      //   console.log(productData)
     } catch (e) {
       alert("Product not found" + e);
     }
   };
   useEffect(() => {
-    // console.log('id', id)
-    getProduct(id);
+    if (id) {
+      const idNum = +id;
+      getProduct(idNum);
+    }
     return () => {
       setProduct(null);
     };

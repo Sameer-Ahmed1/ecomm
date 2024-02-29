@@ -1,5 +1,6 @@
 import car from "../assets/images/car.jpg";
-const products = [
+import { Product } from "../types";
+const products: Product[] = [
   {
     id: 1,
     name: "Product 1",

@@ -11,4 +11,9 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
+  build: {
+    rollupOptions: {
+      input: "/src/main.tsx",
+    },
+  },
 });

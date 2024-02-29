@@ -1,18 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { CartContext } from "../contexts/CartContext";
+import { useCart } from "../hooks/useCart";
 
 const CartSideBar = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, removeFromCart } = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  const sidebarRef = useRef();
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };

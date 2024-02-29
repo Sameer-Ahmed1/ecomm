@@ -1,6 +1,6 @@
 import products from "../Data/products";
-
-function fetchAllProducts() {
+import { Product } from "../types";
+function fetchAllProducts(): Promise<Product[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(products);
@@ -8,7 +8,7 @@ function fetchAllProducts() {
   });
 }
 
-function fetchProduct(id) {
+function fetchProduct(id: number): Promise<Product> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const product = products.find((product) => {

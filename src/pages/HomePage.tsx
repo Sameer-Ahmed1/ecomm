@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { ProductContext } from "../contexts/ProductContext";
+import { useProduct } from "../hooks/useProduct";
 
 function HomePage() {
-  const { products } = useContext(ProductContext);
-
+  const { products } = useProduct();
   const [search, setSearch] = useState("");
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(search.toLowerCase())

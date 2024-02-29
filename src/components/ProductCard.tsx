@@ -1,6 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Product } from "../types"; // import the Product type
+import React, { FC } from "react";
 
-function ProductCard({ product }) {
+interface ProductCardProps {
+  product: Product;
+}
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
   return (
     <Link to={`/products/${product.id}`}>
       <div className="max-w-xs rounded overflow-hidden shadow-lg m-2">
@@ -17,6 +22,6 @@ function ProductCard({ product }) {
       </div>
     </Link>
   );
-}
+};
 
 export default ProductCard;

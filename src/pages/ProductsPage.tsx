@@ -7,7 +7,8 @@ import { Product } from "../types";
 const ProductsPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
-  const { addToCart, removeFromCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart, removeFromCart, updateQuantity } = useCart();
   const getProduct = async (id: number) => {
     try {
       const productData = await productService.fetchProduct(+id);
@@ -25,6 +26,11 @@ const ProductsPage = () => {
       setProduct(null);
     };
   }, [id]);
+  useEffect(() => {
+    if (id) {
+      updateQuantity(+id, quantity);
+    }
+  }, [quantity]);
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -50,6 +56,23 @@ const ProductsPage = () => {
         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
           Buy Now
         </button>
+        <div className="mt-4">
+          <button
+            onClick={() => setQuantity(quantity + 1)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+          >
+            +
+          </button>
+          {quantity}
+          <button
+            onClick={() => {
+              if (quantity > 1) setQuantity(quantity - 1);
+            }}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2 ml-2"
+          >
+            -
+          </button>
+        </div>
       </div>
     </div>
   );

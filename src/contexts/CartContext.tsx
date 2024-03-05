@@ -34,9 +34,22 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
   const removeFromCart = (productId: number) => {
     setCart(cart.filter((product) => product.id !== productId));
   };
-
+  const updateQuantity = (productId: number, quantity: number) => {
+    if (quantity > 0) {
+      setCart(
+        cart.map((product) => {
+          if (product.id === productId) {
+            return { ...product, quantity: quantity };
+          }
+          return product;
+        })
+      );
+    }
+  };
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, updateQuantity }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <nav className="bg-blue-500 p-6">
@@ -13,7 +13,7 @@ const Navbar = () => {
             Home
           </Link>
         </li>
-        {isAuthenticated ? (
+        {user ? (
           <>
             {/* <li>
               <Link to="/profile" className="text-white">

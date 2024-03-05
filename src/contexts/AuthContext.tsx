@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import { AuthContextType } from "../types";
+import { AuthContextType, User } from "../types";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
@@ -9,23 +9,23 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   const login = (username: string, password: string) => {
     // For now, we'll just check if the username and password are not empty
     if (username && password) {
-      setIsAuthenticated(true);
+      setUser({ username });
     } else {
-      setIsAuthenticated(false);
+      setUser(null);
     }
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

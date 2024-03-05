@@ -14,8 +14,13 @@ export interface CartContextType {
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
 }
+export interface User {
+  username: string;
+  // Add other user properties here
+}
+
 export interface AuthContextType {
-  isAuthenticated: boolean;
+  user: User | null;
   login: (username: string, password: string) => void;
   logout: () => void;
 }

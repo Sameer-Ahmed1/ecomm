@@ -2,13 +2,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import productService from "../services/product";
 import React, { useEffect, useState } from "react";
 import { useCart } from "../hooks/useCart";
+import { useAuth } from "../hooks/useAuth";
 import { Product } from "../types";
 
 const ProductsPage = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [isAddedToCart, setIsAddedToCart] = useState<boolean>(false);
+
   const { addToCart, removeFromCart, updateQuantity } = useCart();
   const getProduct = async (id: number) => {
     try {
@@ -32,6 +36,22 @@ const ProductsPage = () => {
       updateQuantity(+id, quantity);
     }
   }, [quantity]);
+  const handleAddToCart = (product: Product) => {
+    if (user) {
+      addToCart(product);
+      setIsAddedToCart(true);
+    } else {
+      navigate("/login");
+    }
+  };
+  const handleBuy = (product: Product) => {
+    if (!user) {
+      addToCart(product);
+      navigate("/login");
+    } else {
+      navigate(`/checkout/${product.id}`);
+    }
+  };
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -49,13 +69,16 @@ const ProductsPage = () => {
         <p className="mb-2">{product.description}</p>
         <p className="text-xl font-bold mb-4">${product.price}</p>
         <button
-          onClick={() => addToCart(product)}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+          onClick={() => handleAddToCart(product)}
+          className={`font-bold py-2 px-4 rounded mr-2 ${
+            isAddedToCart ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-700"
+          } text-white`}
+          disabled={isAddedToCart}
         >
-          Add to Cart
+          {isAddedToCart ? "Added to Cart" : "Add to Cart"}
         </button>
         <button
-          onClick={() => navigate(`/checkout/${product.id}`)}
+          onClick={() => handleBuy(product)}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
         >
           Buy Now

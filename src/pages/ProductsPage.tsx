@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import productService from "../services/product";
 import React, { useEffect, useState } from "react";
 import { useCart } from "../hooks/useCart";
@@ -6,6 +6,7 @@ import { Product } from "../types";
 
 const ProductsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const { addToCart, removeFromCart, updateQuantity } = useCart();
@@ -53,7 +54,10 @@ const ProductsPage = () => {
         >
           Add to Cart
         </button>
-        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        <button
+          onClick={() => navigate(`/checkout/${product.id}`)}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        >
           Buy Now
         </button>
         <div className="mt-4">

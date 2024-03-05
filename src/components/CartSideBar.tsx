@@ -34,7 +34,7 @@ const CartSideBar = () => {
     <div className="relative">
       <button
         onClick={toggleSidebar}
-        className="fixed top-0 right-0 m-4 bg-blue-500 text-white px-4 py-2 rounded"
+        className="fixed top-0 right-0 m-4 mt-24 bg-blue-500 text-white px-4 py-2 rounded"
       >
         Cart
       </button>

@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
+import LoginPage from "./pages/LoginPage";
+import CheckoutPage from "./pages/Checkout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductsPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/checkout/:id",
+        element: <CheckoutPage />,
       },
     ],
   },

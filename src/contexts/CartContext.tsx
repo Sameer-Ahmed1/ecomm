@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState, FC } from "react";
-import { Product, CartContextType, CartItem } from "../types";
+import { Product, CartContextType, CartItem, User } from "../types";
+import { useAuth } from "../hooks/useAuth";
+import userService from "../services/user";
 export const CartContext = createContext<CartContextType | undefined>(
   undefined
 );
@@ -8,14 +10,28 @@ interface CartProviderProps {
 }
 
 export const CartProvider: FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-
+  const { user } = useAuth();
+  const [cart, setCart] = useState<CartItem[]>([]);
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    if (user === null) {
+      setCart([]);
+      localStorage.removeItem("cart");
+    } else {
+      const savedCart = localStorage.getItem("cart");
+      setCart(savedCart ? JSON.parse(savedCart) : user.cart);
+    }
+  }, [user]);
+
+  const updateCart = async (cart: CartItem[]) => {
+    if (user) {
+      try {
+        localStorage.setItem("cart", JSON.stringify(cart));
+        await userService.updateUserCart(user.username, cart);
+      } catch (e: any) {
+        alert(e.message);
+      }
+    }
+  };
 
   const addToCart = (product: Product) => {
     try {
@@ -26,6 +42,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
       }
       const newProduct = { ...product, quantity: 1 };
       setCart([...cart, newProduct]);
+      updateCart([...cart, newProduct]);
     } catch (e: any) {
       alert(e.message);
     }
@@ -33,6 +50,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
 
   const removeFromCart = (productId: number) => {
     setCart(cart.filter((product) => product.id !== productId));
+    updateCart(cart.filter((product) => product.id !== productId));
   };
   const updateQuantity = (productId: number, quantity: number) => {
     if (quantity > 0) {

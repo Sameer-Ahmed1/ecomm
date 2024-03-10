@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     try {
       login(username, password);
-      navigate("/");
+      const from = location.state?.from || "/";
+      navigate(from);
     } catch (error) {
       alert("Failed to log in");
     }

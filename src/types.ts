@@ -5,7 +5,9 @@ export interface Product {
   image: string;
   price: number;
 }
-export interface CartItem extends Product {
+export interface CartItem {
+  id: number;
+  name: string;
   quantity: number;
 }
 export interface CartContextType {
@@ -16,6 +18,7 @@ export interface CartContextType {
 }
 export interface User {
   username: string;
+  cart: CartItem[];
   // Add other user properties here
 }
 

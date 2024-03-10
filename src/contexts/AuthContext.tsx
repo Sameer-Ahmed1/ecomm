@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import { AuthContextType, User } from "../types";
+import userService from "../services/user";
+import { useCart } from "../hooks/useCart";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
@@ -11,10 +13,12 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (username: string, password: string) => {
+  const login = async (username: string, password: string) => {
     // For now, we'll just check if the username and password are not empty
     if (username && password) {
-      setUser({ username });
+      const userFetched = await userService.fetchUser(username);
+      console.log("userFetched", userFetched);
+      setUser(userFetched);
     } else {
       setUser(null);
     }

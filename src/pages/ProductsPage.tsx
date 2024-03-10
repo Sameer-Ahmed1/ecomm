@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import productService from "../services/product";
 import React, { useEffect, useState } from "react";
 import { useCart } from "../hooks/useCart";
@@ -41,7 +41,7 @@ const ProductsPage = () => {
       addToCart(product);
       setIsAddedToCart(true);
     } else {
-      navigate("/login");
+      navigate("/login", { state: { from: `/products/${product.id}` } });
     }
   };
   const handleBuy = (product: Product) => {

@@ -55,6 +55,7 @@ const ProductsPage = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="flex flex-col md:flex-row m-6">
       <div className="w-full md:w-1/2 p-3">
@@ -68,6 +69,12 @@ const ProductsPage = () => {
         <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
         <p className="mb-2">{product.description}</p>
         <p className="text-xl font-bold mb-4">${product.price}</p>
+        <p className="text-sm mb-2">Brand: {product.brand}</p>
+        <p className="text-sm mb-2">Category: {product.category}</p>
+        <p className="text-sm mb-2">Seller: {product.sellerName}</p>
+        <p className="text-sm mb-2">Number of reviews: {product.numReviews}</p>
+        <p className="text-sm mb-2">Rating {product.rating}</p>
+        <p className="text-sm mb-2">Stock: {product.countInStock}</p>
         <button
           onClick={() => handleAddToCart(product)}
           className={`font-bold py-2 px-4 rounded mr-2 ${

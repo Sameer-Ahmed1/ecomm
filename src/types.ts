@@ -4,6 +4,15 @@ export interface Product {
   description: string;
   image: string;
   price: number;
+  category: string;
+  brand: string;
+  rating: number;
+  numReviews: number;
+  countInStock: number;
+  createdAt: Date;
+  updatedAt: Date;
+  sellerName: string;
+  sellerId: number;
 }
 export interface CartItem {
   id: number;

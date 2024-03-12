@@ -8,6 +8,7 @@ import ProductsPage from "./pages/ProductsPage";
 import LoginPage from "./pages/LoginPage";
 import CheckoutPage from "./pages/Checkout";
 import PaymentGateway from "./pages/PaymentGateway";
+import CheckoutCart from "./pages/CheckoutCart";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout/:id",
         element: <CheckoutPage />,
+      },
+      {
+        path: "/checkout",
+        element: <CheckoutCart />,
       },
     ],
   },

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import productService from "../services/product";
 import { Product } from "../types";
 
 const CheckoutPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -49,7 +50,9 @@ const CheckoutPage = () => {
       </div>
       <div className="w-full md:w-1/2 p-3">
         <h2 className="text-2xl font-bold mb-2">Shipping Information</h2>
-        <form onSubmit={handleCheckout}>
+        <form onSubmit={handleCheckout} className="flex flex-col space-y-4">
+          {" "}
+          {/* Added flex and space-y-4 classes */}
           <label>
             Address:
             <input
@@ -57,6 +60,7 @@ const CheckoutPage = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               required
+              className="border-2 border-gray-300 p-2 rounded ml-2"
             />
           </label>
           <label>
@@ -66,6 +70,7 @@ const CheckoutPage = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               required
+              className="border-2 border-gray-300 p-2 rounded ml-2"
             />
           </label>
           <label>
@@ -75,9 +80,18 @@ const CheckoutPage = () => {
               value={zip}
               onChange={(e) => setZip(e.target.value)}
               required
+              className="border-2 border-gray-300 p-2 rounded ml-2"
             />
           </label>
-          <button type="submit">Checkout</button>
+          <button
+            onClick={() => {
+              navigate("/payment");
+            }}
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Proceed To Checkout
+          </button>{" "}
         </form>
       </div>
     </div>

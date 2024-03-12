@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import LoginPage from "./pages/LoginPage";
 import CheckoutPage from "./pages/Checkout";
+import PaymentGateway from "./pages/PaymentGateway";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
     ],
+  },
+  {
+    path: "/payment",
+    element: <PaymentGateway />,
   },
 ]);
 

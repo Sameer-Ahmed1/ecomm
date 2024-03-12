@@ -1,19 +1,20 @@
-import car from "../assets/images/car.jpg";
+import lehenga from "../assets/images/lehenga.jpg";
 import bluetshirt from "../assets/images/bluetshirt.jpg";
 import jacket from "../assets/images/jacket.jpg";
 import trousers1 from "../assets/images/trousers1.jpg";
 import trousers2 from "../assets/images/trousers2.jpg";
 import yellowshirt from "../assets/images/yellowshirt.jpg";
-import { Product } from "../types";
+import { Product, SubCategory } from "../types";
 
 const products: Product[] = [
   {
     id: 1,
-    name: "car",
+    name: "Red Lehenga",
     description: "This is product 1",
     price: 100,
-    image: car,
-    category: "Vehicles",
+    image: lehenga,
+    category: "Clothing",
+    subCategory: SubCategory.Wedding,
     brand: "Brand A",
     rating: 4.5,
     numReviews: 10,
@@ -30,6 +31,7 @@ const products: Product[] = [
     price: 200,
     image: bluetshirt,
     category: "Clothing",
+    subCategory: SubCategory.Tshirt,
     brand: "Brand B",
     rating: 4.0,
     numReviews: 20,
@@ -46,6 +48,7 @@ const products: Product[] = [
     price: 300,
     image: jacket,
     category: "Clothing",
+    subCategory: SubCategory.Jacket,
     brand: "Brand C",
     rating: 4.2,
     numReviews: 30,
@@ -62,6 +65,7 @@ const products: Product[] = [
     price: 400,
     image: trousers1,
     category: "Clothing",
+    subCategory: SubCategory.Trouser,
     brand: "Brand D",
     rating: 4.3,
     numReviews: 40,
@@ -78,6 +82,7 @@ const products: Product[] = [
     price: 500,
     image: trousers2,
     category: "Clothing",
+    subCategory: SubCategory.Trouser,
     brand: "Brand E",
     rating: 4.1,
     numReviews: 50,
@@ -94,6 +99,7 @@ const products: Product[] = [
     price: 600,
     image: yellowshirt,
     category: "Clothing",
+    subCategory: SubCategory.Shirt,
     brand: "Brand F",
     rating: 4.4,
     numReviews: 60,

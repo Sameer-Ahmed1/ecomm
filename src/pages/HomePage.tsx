@@ -1,29 +1,34 @@
 import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useProduct } from "../hooks/useProduct";
-
+import SearchBar from "../components/SearchBar";
+import CategoryNavbar from "../components/CategoryNavbar";
 function HomePage() {
   const { products } = useProduct();
   const [search, setSearch] = useState("");
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
+  const [filter, setFilter] = useState("");
+
+  const filteredProducts = products.filter(
+    (product) =>
+      product.name.toLowerCase().includes(search.toLowerCase()) &&
+      (filter ? product.subCategory === filter : true)
   );
+
   if (!products) {
     return <div>loading...</div>;
   }
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="p-2 m-4 border rounded w-full md:w-1/2 lg:w-2/3"
-      />
+      <CategoryNavbar setFilter={setFilter} />
+      <SearchBar search={search} setSearch={setSearch} />
       <div className="flex flex-wrap justify-center">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {filteredProducts.length ? (
+          filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        ) : (
+          <div>No products found</div>
+        )}
       </div>
     </div>
   );

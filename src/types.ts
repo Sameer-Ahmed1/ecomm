@@ -1,3 +1,12 @@
+export enum SubCategory {
+  Trouser = "Trouser",
+  Shirt = "Shirt",
+  Tshirt = "Tshirt",
+  Jacket = "Jacket",
+  Wedding = "Wedding",
+  Traditional = "Traditional",
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -5,6 +14,7 @@ export interface Product {
   image: string;
   price: number;
   category: string;
+  subCategory: SubCategory;
   brand: string;
   rating: number;
   numReviews: number;
@@ -14,6 +24,7 @@ export interface Product {
   sellerName: string;
   sellerId: number;
 }
+
 export interface CartItem {
   id: number;
   name: string;

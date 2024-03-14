@@ -1,42 +1,36 @@
-import users from "../Data/users";
-import { User } from "../types";
-import { CartItem } from "../types";
+import axios from "axios";
 
-function fetchAllUsers(): Promise<User[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(users);
-    }, 1000);
-  });
-}
+const baseUrl = "http://localhost:5000/api"; // replace with your backend URL
 
-function fetchUser(username: string): Promise<User> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const user = users.find((user) => {
-        return user.username === username;
-      });
-      if (user) {
-        resolve(user);
-      } else {
-        reject(new Error("User not found"));
-      }
-    }, 1000);
-  });
-}
+const login = async (credentials: any) => {
+  try {
+    const response = await axios.post(`${baseUrl}/login`, credentials);
+    return response.data;
+  } catch (e) {
+    console.log(" log in error ");
+    throw new Error("log in error");
+  }
+};
 
-function updateUserCart(username: string, cart: CartItem[]): Promise<User> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const user = users.find((user) => user.username === username);
-      if (user) {
-        user.cart = cart;
-        resolve(user);
-      } else {
-        reject(new Error("User not found"));
-      }
-    }, 1000);
-  });
-}
+const signup = async (newUser: any) => {
+  const response = await axios.post(`${baseUrl}/login/signup`, newUser);
+  return response.data;
+};
 
-export default { fetchAllUsers, fetchUser, updateUserCart };
+const addToCart = async (id: string, newCart: any) => {
+  try {
+    const modifiedCart = newCart.map((item: any) => ({
+      ...item,
+      product: item.id,
+    }));
+
+    const response = await axios.put(`${baseUrl}/users/${id}/cart`, {
+      cart: modifiedCart,
+    });
+    return response.data;
+  } catch (e) {
+    console.log("add to cart error");
+    throw new Error("add to cart error");
+  }
+};
+export default { login, signup, addToCart };

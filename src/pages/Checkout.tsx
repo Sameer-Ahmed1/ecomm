@@ -11,9 +11,9 @@ const CheckoutPage = () => {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
 
-  const getProduct = async (id: number) => {
+  const getProduct = async (id: string) => {
     try {
-      const productData = await productService.fetchProduct(+id);
+      const productData = await productService.fetchProduct(id);
       setProduct(productData);
     } catch (e) {
       alert("Product not found" + e);
@@ -22,7 +22,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (id) {
-      const idNum = +id;
+      const idNum = id;
       getProduct(idNum);
     }
   }, [id]);

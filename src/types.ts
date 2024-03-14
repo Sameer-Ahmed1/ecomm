@@ -8,7 +8,7 @@ export enum SubCategory {
 }
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   description: string;
   image: string;
@@ -26,17 +26,17 @@ export interface Product {
 }
 
 export interface CartItem {
-  id: number;
-  name: string;
+  id: string;
   quantity: number;
 }
 export interface CartContextType {
   cart: CartItem[];
   addToCart: (product: Product) => void;
-  removeFromCart: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
 }
 export interface User {
+  id: string;
   username: string;
   cart: CartItem[];
   // Add other user properties here

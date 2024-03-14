@@ -18,6 +18,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
       localStorage.removeItem("cart");
     } else {
       const savedCart = localStorage.getItem("cart");
+
       setCart(savedCart ? JSON.parse(savedCart) : user.cart);
     }
   }, [user]);
@@ -26,7 +27,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
     if (user) {
       try {
         localStorage.setItem("cart", JSON.stringify(cart));
-        await userService.updateUserCart(user.username, cart);
+        await userService.addToCart(user.id, cart);
       } catch (e: any) {
         alert(e.message);
       }
@@ -48,11 +49,11 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
     }
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string) => {
     setCart(cart.filter((product) => product.id !== productId));
     updateCart(cart.filter((product) => product.id !== productId));
   };
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: string, quantity: number) => {
     if (quantity > 0) {
       setCart(
         cart.map((product) => {

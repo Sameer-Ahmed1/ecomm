@@ -15,12 +15,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (username: string, password: string) => {
     // For now, we'll just check if the username and password are not empty
-    if (username && password) {
-      const userFetched = await userService.fetchUser(username);
-      console.log("userFetched", userFetched);
-      setUser(userFetched);
-    } else {
+    try {
+      if (username && password) {
+        const userFetched = await userService.login({ username, password });
+        console.log("userFetched", userFetched);
+        setUser(userFetched);
+      } else {
+        setUser(null);
+      }
+    } catch (e) {
       setUser(null);
+      console.log(e);
     }
   };
 

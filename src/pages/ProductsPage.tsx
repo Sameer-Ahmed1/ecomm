@@ -14,9 +14,9 @@ const ProductsPage = () => {
   const [isAddedToCart, setIsAddedToCart] = useState<boolean>(false);
 
   const { addToCart, removeFromCart, updateQuantity } = useCart();
-  const getProduct = async (id: number) => {
+  const getProduct = async (id: string) => {
     try {
-      const productData = await productService.fetchProduct(+id);
+      const productData = await productService.fetchProduct(id);
       setProduct(productData);
     } catch (e) {
       alert("Product not found" + e);
@@ -24,7 +24,7 @@ const ProductsPage = () => {
   };
   useEffect(() => {
     if (id) {
-      const idNum = +id;
+      const idNum = id;
       getProduct(idNum);
     }
     return () => {
@@ -33,7 +33,7 @@ const ProductsPage = () => {
   }, [id]);
   useEffect(() => {
     if (id) {
-      updateQuantity(+id, quantity);
+      updateQuantity(id, quantity);
     }
   }, [quantity]);
   const handleAddToCart = (product: Product) => {

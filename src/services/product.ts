@@ -1,26 +1,38 @@
-import products from "../Data/products";
 import { Product } from "../types";
-function fetchAllProducts(): Promise<Product[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(products);
-    }, 1000);
-  });
-}
+import axios from "axios";
 
-function fetchProduct(id: number): Promise<Product> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const product = products.find((product) => {
-        return product.id === id;
-      });
-      if (product) {
-        resolve(product);
-      } else {
-        reject(new Error("Product not found"));
-      }
-    }, 1000);
-  });
-}
+const baseUrl = "http://localhost:5000/api/products"; // replace with your backend URL
 
-export default { fetchAllProducts, fetchProduct };
+const fetchAllProducts = async (): Promise<Product[]> => {
+  try {
+    const response = await axios.get(baseUrl);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+    throw error;
+  }
+};
+
+const fetchProduct = async (id: string): Promise<Product> => {
+  try {
+    const response = await axios.get(`${baseUrl}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching product with id ${id}:`, error);
+    throw error;
+  }
+};
+const updateProduct = async (
+  id: string,
+  countInStock: number
+): Promise<Product> => {
+  try {
+    const response = await axios.put(`${baseUrl}/${id}`, { countInStock });
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating product with id ${id}:`, error);
+    throw error;
+  }
+};
+
+export default { fetchAllProducts, fetchProduct, updateProduct };

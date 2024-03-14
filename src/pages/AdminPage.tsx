@@ -1,6 +1,142 @@
 import React, { useEffect, useState } from "react";
 import productService from "../services/product";
 import { Product } from "../types";
+const CreateProductForm = () => {
+  const [productData, setProductData] = useState<Partial<Product>>({});
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProductData({
+      ...productData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const createdProduct = await productService.createProduct(
+        productData as Product
+      );
+      console.log("Product created:", createdProduct);
+    } catch (error) {
+      console.error("Failed to create product:", error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <label>
+        Name:
+        <input
+          type="text"
+          name="name"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Description:
+        <input
+          type="text"
+          name="description"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Image URL:
+        <input
+          type="text"
+          name="image"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Price:
+        <input
+          type="number"
+          name="price"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Category:
+        <input
+          type="text"
+          name="category"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        SubCategory:
+        <input
+          type="text"
+          name="subCategory"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Brand:
+        <input
+          type="text"
+          name="brand"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Rating:
+        <input
+          type="number"
+          name="rating"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Number of Reviews:
+        <input
+          type="number"
+          name="numReviews"
+          onChange={handleChange}
+          required
+          className="p-2 border-2 border-gray-200"
+        />
+      </label>
+      <label>
+        Count in Stock:
+        <input
+          type="number"
+          name="countInStock"
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Seller Name:
+        <input type="text" name="sellerName" onChange={handleChange} required />
+      </label>
+      <label>
+        Seller ID:
+        <input type="number" name="sellerId" onChange={handleChange} required />
+      </label>
+      <button type="submit">Create Product</button>
+    </form>
+  );
+};
 
 const AdminPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,6 +171,7 @@ const AdminPage = () => {
       <div className="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
         <div className="flex-1">
           <h1 className="text-2xl font-bold">Admin Page</h1>
+          <CreateProductForm /> {/* use the CreateProductForm component */}
           {products.map((product) => (
             <div
               key={product.id}

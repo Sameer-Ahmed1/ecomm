@@ -34,5 +34,14 @@ const updateProduct = async (
     throw error;
   }
 };
+const createProduct = async (productData: Product): Promise<Product> => {
+  try {
+    const response = await axios.post(baseUrl, productData);
+    return response.data;
+  } catch (error) {
+    console.error(`Error creating product:`, error);
+    throw error;
+  }
+};
 
-export default { fetchAllProducts, fetchProduct, updateProduct };
+export default { fetchAllProducts, fetchProduct, updateProduct, createProduct };
